@@ -41,11 +41,13 @@ This eight-step loop is the spine of the product. Every V1 feature exists to ser
 3. Open the player profile
 4. Review statistics, game logs, and performance trends
 5. Compare the player with another NBA player
-6. Create a structured scouting report
+6. Create a structured scouting report — including an explainable team-fit section for a selected NBA team
 7. Save the analysis
 8. Return later and retrieve it — and optionally share a read-only report
 
 Step 8 is the one that distinguishes Courtside from a statistics website. A stats site answers a question. Courtside is meant to accumulate answers.
+
+**Team-fit analysis lives inside step 6.** It is a structured section of the scouting report, not a separate destination — the user selects the team being evaluated while writing the report, and the assessment saves, shares, and prints with it. This is an approved V1 decision ([DECISION_LOG.md](./DECISION_LOG.md) D-04). A standalone team-fit dashboard, simulator, or workspace is outside V1.
 
 ## What "Good" Looks Like
 

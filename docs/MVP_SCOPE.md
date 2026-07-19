@@ -63,17 +63,27 @@ The centerpiece of V1. This is where research becomes an artifact.
 | **Team-fit analysis** | **In V1 — as a section within the report** | See below. |
 | User-defined custom categories | Deferred | Breaks comparability between reports. Revisit once the fixed set is proven. |
 
-### Team-Fit Analysis — scoped inside the report
+### Team-Fit Analysis — scoped inside the report ✅ *Approved*
 
-Team-fit is **a section of the scouting report**, not a standalone feature or separate page. Inside a report, the user selects a team and gets a factor-based fit assessment that saves, shares, and prints with the report itself.
+Team-fit is **a structured section of the scouting report**, not a standalone feature or separate page. Approved decision — see [DECISION_LOG.md](./DECISION_LOG.md) D-04.
 
-This scoping is deliberate. As a standalone surface, team-fit would need its own persistence, navigation, and empty/loading/error states. Nested in the report, it inherits all of that — and it sits where the user is already forming a judgment, which is where a fit assessment is actually useful.
+The V1 user sequence:
 
-Factors must be understandable and individually visible:
+1. Open or create a scouting report for a player
+2. Select the NBA team being evaluated
+3. Complete the explainable team-fit section
+4. Save the team-fit assessment as part of the scouting report
+5. Share it through the same read-only report-sharing workflow
 
-position · offensive role · defensive role · shooting · playmaking · rebounding · roster needs · role overlap · team strengths and weaknesses
+This scoping is deliberate. As a standalone surface, team-fit would need its own persistence, navigation, sharing, and empty/loading/error states. Nested in the report, it inherits all of that — and it sits where the user is already forming a judgment, which is where a fit assessment is actually useful.
 
-**Constraint:** no unexplained machine-learning score in V1. If the interface shows a fit rating, the user must be able to see which factors produced it. A number a user cannot interrogate is a number they cannot defend to their audience — which defeats the point.
+**Canonical V1 factor list.** Factors must be understandable and individually visible:
+
+position · offensive role · defensive role · shooting · playmaking · rebounding · roster needs · role overlap · team strengths · team weaknesses
+
+**Constraint:** the assessment must show visible reasoning. No opaque composite score and no unexplained machine-learning prediction in V1. If the interface shows a fit rating, the user must be able to see which factors produced it. A number a user cannot interrogate is a number they cannot defend to their audience — which defeats the point.
+
+**Outside V1:** a standalone team-fit dashboard, simulator, or workspace ([NON_GOALS.md](./NON_GOALS.md)).
 
 ## Watchlists
 

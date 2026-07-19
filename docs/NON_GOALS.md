@@ -26,7 +26,15 @@ Note the boundary: this excludes AI generating analytical *conclusions*. It does
 
 **Excluded:** any V1 rating the user cannot decompose into named factors
 
-Team-fit analysis must expose its inputs — position, offensive and defensive role, shooting, playmaking, rebounding, roster needs, role overlap, team strengths and weaknesses. A composite number with no visible derivation is not permitted in V1, regardless of how accurate it might be.
+Team-fit analysis must expose its inputs — position, offensive role, defensive role, shooting, playmaking, rebounding, roster needs, role overlap, team strengths, team weaknesses. A composite number with no visible derivation is not permitted in V1, regardless of how accurate it might be.
+
+## Standalone Team-Fit Surfaces
+
+**Excluded:** a separate team-fit dashboard · a fit simulator · a dedicated team-fit workspace
+
+Team-fit analysis *is* in V1 — as a structured section inside the scouting report ([MVP_SCOPE.md](./MVP_SCOPE.md), [DECISION_LOG.md](./DECISION_LOG.md) D-04). What's excluded is team-fit as its own product surface.
+
+A standalone surface would need its own persistence, navigation, sharing, and state handling, duplicating what the report already provides. It would also separate the fit assessment from the analysis that justifies it, which is where the reasoning lives. Simulation in particular — projecting outcomes across hypothetical roster configurations — is closer to the excluded trade-machine category than to scouting.
 
 ## Financial and Transactional Modeling
 

@@ -2,11 +2,42 @@
 
 ## Basis
 
-Courtside is pre-launch. There are no users, no analytics, and no baseline — so any specific numeric target would be invented, and inventing targets tends to produce goals that get optimized against instead of learned from.
+Courtside is pre-launch. There are no users, no analytics, and no baseline.
 
-Instead, metrics are anchored to **completion of the V1 workflow**. Every metric here is derivable from the application's own database using data the product already needs to store. None requires an analytics vendor, and none requires tracking users beyond their own activity.
+Metrics are anchored to **completion of the V1 workflow**. Every metric here is derivable from the application's own database using data the product already needs to store. None requires an analytics vendor, and none requires tracking users beyond their own activity.
 
-Targets are set after launch, once real baselines exist.
+Two kinds of number are distinguished throughout this document:
+
+- **Business projections** — forecasts of growth or revenue. Still rejected pre-launch. With no baseline they are invented, and invented forecasts get optimized against rather than learned from.
+- **Initial beta validation targets** — small, explicitly provisional thresholds that tell us whether the V1 workflow functions for real people. Accepted, and set out below.
+
+The second kind is useful precisely because it is modest and revisable. Ongoing rate-based targets are still set after launch, once real baselines exist.
+
+---
+
+## Initial Beta Validation Targets
+
+These are **initial beta validation targets**, not guaranteed business outcomes and not forecasts. They exist to answer one question: does the V1 workflow function for real users, end to end?
+
+| # | Target | What it validates |
+|---|---|---|
+| 1 | **At least 10 users register** | The account flow works for people who aren't us. |
+| 2 | **At least 5 users return during a later seven-day period** | Saved work brings people back — the product's central premise. |
+| 3 | **At least 20 scouting reports created or saved, collectively** | The core artifact is being produced, not just started. |
+| 4 | **At least 10 player comparisons saved, collectively** | Comparison is used as research, not skipped. |
+| 5 | **At least 5 users create at least one watchlist** | Ongoing tracking is adopted rather than ignored. |
+
+Targets 3 and 4 are collective across all users; targets 1, 2, and 5 count distinct users.
+
+### Conditions on these targets
+
+- **They are initial targets.** They mark a first checkpoint, not a definition of success.
+- **They may be revised after observing actual beta usage.** If real behavior shows a threshold was set wrongly — in either direction — it should be changed, and the change recorded.
+- **They are not guaranteed business outcomes.** Nothing here is a projection, commitment, or forecast of growth or revenue.
+- **They must eventually be measurable from Courtside's own application database.** Each maps to records the product already needs: user rows, session timestamps, report rows, saved-comparison rows, watchlist rows.
+- **No external analytics vendor is required to measure them.** If one is ever adopted, it will be for a different reason — not to satisfy these targets.
+
+Instrumentation is scheduled in [ROADMAP.md](./ROADMAP.md) Phase 8. See [DECISION_LOG.md](./DECISION_LOG.md) D-12.
 
 ---
 

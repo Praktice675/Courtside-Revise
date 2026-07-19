@@ -50,6 +50,29 @@ Two independent layers, both required:
 
 Hiding UI is not authorization. A user's workspace is private by default; sharing is an explicit, revocable, per-report grant. Shared report access must expose only that report — never the author's other work or account details.
 
+### Ordering: authentication before *private* persistence
+
+Authentication, authorization, and ownership rules must be established **before Courtside stores private user-owned artifacts**:
+
+- scouting reports (including their team-fit sections)
+- watchlists
+- saved player comparisons
+- private notes
+- sharing permissions
+
+Every record above needs an owner, and ownership must exist before the first row does. Retrofitting authorization onto data already stored without it is the pattern that produces breaches — the migration is error-prone, and any record created in the gap has ambiguous ownership.
+
+**This rule does not extend to all persistence or all data modeling.** The following are public, un-owned, and may be designed or implemented independently of authentication:
+
+- public NBA provider data
+- canonical basketball entities (players, teams, seasons, games)
+- provider adapters and the provider boundary interface
+- sports-data ingestion, caching, and mapping to Courtside domain types
+
+None of it belongs to a user, so none of it needs an owner. Blocking this work on authentication would serialize the roadmap for no security benefit — and provider integration is the largest unknown in V1, so it benefits from starting early.
+
+**The rule that must hold is separation.** Public sports data and private user-owned records stay distinct: separate tables, separate access paths, no foreign keys implying user ownership of canonical entities. A record is either public reference data or a private user artifact — never ambiguously both. Where they meet (a report referencing a player), the reference points from the private record to the public entity, never the reverse.
+
 ## Dependencies
 
 Add a dependency only when it solves a real problem better than a small amount of code you'd own. Every dependency is a permanent obligation: security patches, breaking changes, bundle size, and abandonment risk.

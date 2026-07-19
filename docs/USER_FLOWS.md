@@ -100,12 +100,17 @@ Requirements:
 1. User starts a report from a player profile or from their workspace.
 2. Report opens as a **draft**, associated with that player and a season.
 3. User completes: defined basketball categories, strengths, concerns, role projection, overall conclusion.
-4. User completes the **team-fit section**: selects a team, reviews factor-by-factor fit (position, offensive role, defensive role, shooting, playmaking, rebounding, roster needs, role overlap, team strengths and weaknesses), records their assessment.
+4. User completes the **team-fit section**, which is part of the report rather than a separate surface:
+   1. From within the open report, the user selects the NBA team being evaluated.
+   2. The section presents each factor individually: position, offensive role, defensive role, shooting, playmaking, rebounding, roster needs, role overlap, team strengths, team weaknesses.
+   3. The user records their assessment against those factors, with the reasoning visible.
+   4. The assessment saves as part of the scouting report — it has no separate save action or storage.
+   5. It is shared and printed through the same read-only report workflow (§8) — there is no separate team-fit share.
 5. Draft is saved — explicitly by the user, and the save state is always visible.
 
 Requirements:
 - **Draft safety is non-negotiable.** The user must never be uncertain whether their writing is saved. Show saved/unsaved state persistently, and warn before navigating away with unsaved changes.
-- Team-fit factors are individually visible with their reasoning. No opaque composite score.
+- Team-fit factors are individually visible with their reasoning. No opaque composite score, no unexplained machine-learning prediction.
 - Supporting statistics stay visible while writing — the point is analysis grounded in data, not a blank text box.
 
 - **Loading:** the report shell and any already-entered content appear before the supporting statistics finish loading. A user must be able to keep writing while data loads.
