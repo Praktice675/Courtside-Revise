@@ -37,6 +37,8 @@ npm run typecheck   # type-check with tsc --noEmit (no build, no files emitted)
 npm run lint        # run ESLint
 npm test            # run the unit tests once (Vitest, finite run)
 npm run test:watch  # run the unit tests in watch mode
+npm run test:e2e    # run the Playwright E2E smoke tests (builds and serves the app)
+npm run test:e2e:ui # run the E2E tests in the Playwright UI (local debugging)
 npm run build       # create a production build
 npm run start       # serve the production build
 ```
