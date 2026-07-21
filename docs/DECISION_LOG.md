@@ -161,6 +161,21 @@ Public NBA provider data, canonical basketball entities, provider adapters, and 
 
 ---
 
+## D-14 — Runtime and package-manager standards
+**Status:** ✅ Approved · Phase 1 (Task 1.1)
+
+**Context:** The repository declared no Node.js version and no package manager. A new engineer had no signal for which runtime or tool to use, and the README carried create-next-app boilerplate advertising yarn, pnpm, and bun. This is the ambiguity [ROADMAP.md](./ROADMAP.md) Task 1.1 exists to close.
+
+**Decision:** Standardize on **Node.js 24 LTS**, pinned to `24.18.0` in `.nvmrc`, and **npm 11** as the sole package manager, with `packageManager: npm@11.16.0` (the npm bundled with Node 24.18.0). `package.json` declares `engines` of Node `>=24.0.0 <25.0.0` and npm `>=11.0.0 <12.0.0`.
+
+Considered and rejected: **Node 20** — EOL as of April 2026, invalid despite satisfying Next's `>=20.9.0` floor. **Pinning to the locally installed patch** (24.12.0 / 11.6.2) — would encode a stale version rather than the current supported LTS patch. **A version-manager dependency** — unnecessary; `.nvmrc` is a plain file.
+
+Node 24 is the current Active LTS (EOL April 2028) and the default runtime on Vercel, Courtside's deployment target.
+
+**Consequences:** A fresh clone can reproduce the runtime via `nvm use` and install deterministically with `npm ci`. npm is the only supported package manager; other lockfiles are not committed. The exact `.nvmrc` pin requires periodic patch bumps as the Node 24 line advances — those bumps touch only `.nvmrc` (and `packageManager` when npm advances within 11.x), since `engines` expresses ranges. No dependencies were changed and `package-lock.json` is unmodified.
+
+---
+
 ## Adding a Decision
 
 Record a decision here when it constrains future work and would be expensive to reverse. Include what was considered and why it was rejected — the reasoning is what makes the entry useful when someone revisits it.
