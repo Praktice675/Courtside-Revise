@@ -199,6 +199,32 @@ Key choices:
 
 ---
 
+## D-16 — Supabase client foundation and public key model
+**Status:** ✅ Approved · Authentication Ticket A1
+
+**Context:** Before any authentication workflow is built, the app needs a minimal, secure Supabase connection foundation. D-02 already selected Supabase; this records how the client layer is wired.
+
+**Decision:**
+- **Dependencies:** `@supabase/supabase-js` and `@supabase/ssr` only (installed with the pinned npm 11.16.0). No Zod, CLI, DB, UI, form, or auth-UI packages.
+- **Public key model:** the browser uses only public variables — `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. A secret key, service-role key, database password, or connection string must never appear in browser code, a `NEXT_PUBLIC_*` variable, `.env.example`, tests, docs, or any committed file.
+- **Client factories:** a browser factory (`createBrowserClient`) in `src/lib/supabase/client.ts` and a request-scoped async server factory (`createServerClient` + `next/headers` cookies, `getAll`/`setAll`) in `src/lib/supabase/server.ts`. Clients are created per use, not shared as singletons, per official guidance.
+- **Server/browser boundary:** `server.ts` begins with `import 'server-only'` (a build-time marker Next.js resolves internally — the package is not installed) and also depends on `next/headers`, so it cannot be imported into browser code.
+- **Lazy validation:** `src/lib/supabase/env.ts` validates the two public variables only when a factory is called — never on import — so the app and CI build without credentials while no Supabase feature is rendered. It trims values, treats empty/whitespace as missing, accepts http and https (local development), returns a frozen typed object, and never includes a value in an error message. No non-null-assertion-only validation, and no new validation dependency.
+- **Contract file:** `.env.example` documents only placeholder public values; `.gitignore` keeps ignoring real env files (including `.env.local`) via `.env*` with a single `!.env.example` exception so the contract is committable.
+
+**Future user-owned tables (recorded now, not implemented here).** No database tables are introduced in this ticket. When user-owned tables (profiles, watchlists, comparisons, reports, notes, sharing permissions) are created, they **must**:
+- enable Row Level Security;
+- contain an explicit owner identifier;
+- restrict `select`, `insert`, `update`, and `delete` to the authenticated owner;
+- never rely on frontend filtering for authorization;
+- never use a service-role key to bypass ownership checks in normal product flows.
+
+This aligns with the server-and-database authorization rule in [ENGINEERING_PRINCIPLES.md](./ENGINEERING_PRINCIPLES.md) and the private-by-default model in [D-07](#).
+
+**Consequences:** A secure, testable connection foundation exists with no live credentials required and no product behaviour added. Registration, login, logout, session refresh middleware, profiles, and RLS-backed tables are separate later tickets.
+
+---
+
 ## Adding a Decision
 
 Record a decision here when it constrains future work and would be expensive to reverse. Include what was considered and why it was rejected — the reasoning is what makes the entry useful when someone revisits it.

@@ -29,6 +29,25 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Supabase environment
+
+Courtside uses [Supabase](https://supabase.com) for authentication and data (see [Decision Log D-02](docs/DECISION_LOG.md), [D-16](docs/DECISION_LOG.md)). The application builds and runs without Supabase credentials until an authenticated feature is used; supply them when you start working on auth-backed functionality.
+
+Copy the committed contract and fill in your project values:
+
+```bash
+cp .env.example .env.local   # .env.local is git-ignored — never commit it
+```
+
+Only two **public** variables are used, both safe for browser code:
+
+| Variable | Where to find it |
+| --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API → Project URL |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → Project Settings → API → publishable key |
+
+Never place a Supabase secret key, service-role key, database password, or connection string in `.env.local`, in `.env.example`, or in any `NEXT_PUBLIC_*` variable.
+
 ## Scripts
 
 ```bash
