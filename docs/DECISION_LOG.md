@@ -176,6 +176,29 @@ Node 24 is the current Active LTS (EOL April 2028) and the default runtime on Ve
 
 ---
 
+## D-15 — Continuous-integration quality gate
+**Status:** ✅ Approved · Phase 1 (Task 1.5)
+
+**Context:** Phase 1 needed the verification rule ("type check, lint, test, build") enforced automatically rather than by memory. Tasks 1.1–1.4 established the runtime pin, `typecheck`, Vitest, and Playwright; this task wires them into CI.
+
+**Decision:** A single GitHub Actions workflow (`.github/workflows/ci.yml`, job `verify`) runs on pushes to `main`, pull requests into `main`, and manual `workflow_dispatch`. In order: `npm ci` → type-check → lint → unit tests → production build → Playwright Chromium E2E. Any failed step fails the run; no `continue-on-error`, no retries.
+
+Key choices:
+- **One sequential job**, not a matrix or multiple jobs — smallest professional design for this repo; a single `npm ci` and one Playwright install, cheapest checks first.
+- **Runtime is derived, not duplicated:** Node from `.nvmrc` (`setup-node` `node-version-file`); npm from `package.json` `packageManager`, installed exactly and asserted to match (the step fails on mismatch rather than silently accepting Node's bundled npm).
+- **Official actions only, current majors:** `actions/checkout@v7`, `actions/setup-node@v7`, `actions/upload-artifact@v7` (verified against release pages; the initially assumed v6 was outdated). No third-party actions.
+- **Least privilege:** `permissions: contents: read`. No secrets, no write, no `pull_request_target` — the workflow only exercises public application behaviour and local test infrastructure.
+- **Safe concurrency:** grouped by workflow + ref with `cancel-in-progress`, so a newer commit supersedes an in-flight run on the same branch/PR without cancelling unrelated branches.
+- **npm caching** via `setup-node` (`cache: npm`, keyed on `package-lock.json`); caches only `~/.npm`, never `node_modules`, and does not replace `npm ci`.
+- **Chromium only** via `npx playwright install --with-deps chromium`; no Firefox/WebKit, no Docker.
+- **Playwright artifacts** (`playwright-report/`, `test-results/`) uploaded only on failure.
+
+**Accepted tradeoff — duplicate production build:** because `playwright.config.ts` sets `reuseExistingServer: !process.env.CI`, the E2E step starts its own `npm run build && npm run start` in CI. CI therefore builds twice: once as the explicit build gate, once inside the E2E webServer. This is accepted for now — the app is trivially small, the explicit gate stays clearly visible, and the alternative (a CI-specific branch in `playwright.config.ts`) would risk the self-contained local `npm run test:e2e` behaviour from Task 1.4. Recorded so a future engineer does not "fix" the duplication by editing the Playwright config.
+
+**Consequences:** The verification rule is enforceable and, once branch protection requires the `Verify` check, unmergeable-if-red. Firefox/WebKit, deployment, secrets, and any matrix remain out of scope until a later phase needs them. Action majors will need periodic review as new versions ship.
+
+---
+
 ## Adding a Decision
 
 Record a decision here when it constrains future work and would be expensive to reverse. Include what was considered and why it was rejected — the reasoning is what makes the entry useful when someone revisits it.
