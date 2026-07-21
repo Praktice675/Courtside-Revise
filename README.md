@@ -32,10 +32,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Scripts
 
 ```bash
-npm run dev     # start the development server
-npm run lint    # run ESLint
-npm run build   # create a production build
-npm run start   # serve the production build
+npm run dev        # start the development server
+npm run typecheck  # type-check with tsc --noEmit (no build, no files emitted)
+npm run lint       # run ESLint
+npm run build      # create a production build
+npm run start      # serve the production build
 ```
 
 ## Learn More
