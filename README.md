@@ -43,6 +43,12 @@ npm run build       # create a production build
 npm run start       # serve the production build
 ```
 
+## Continuous Integration
+
+[![CI](https://github.com/Praktice675/Courtside-Revise/actions/workflows/ci.yml/badge.svg)](https://github.com/Praktice675/Courtside-Revise/actions/workflows/ci.yml)
+
+Every push to `main` and every pull request into `main` runs the [`CI` workflow](.github/workflows/ci.yml) on GitHub Actions. It uses the Node version from `.nvmrc` and the npm version from `package.json` (`packageManager`), installs dependencies with `npm ci`, then runs — in order — type-checking, linting, unit tests, the production build, and the Playwright Chromium E2E tests. Any failed step fails the run. See [Decision Log D-15](docs/DECISION_LOG.md).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
