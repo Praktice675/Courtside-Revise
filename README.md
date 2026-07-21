@@ -1,24 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Courtside is an NBA scouting and analytics platform built with [Next.js](https://nextjs.org). See [`docs/`](docs/) for product and engineering documentation.
+
+## Prerequisites
+
+This project standardizes on **Node.js 24.18.0** (Active LTS) and **npm** as the only supported package manager. See [Decision Log D-14](docs/DECISION_LOG.md).
+
+Activate the pinned runtime with [nvm](https://github.com/nvm-sh/nvm) — both commands read `.nvmrc`:
+
+```bash
+nvm install   # installs Node.js 24.18.0 (with npm 11.16.0 bundled)
+nvm use
+```
+
+Not using nvm? Install **Node.js 24.18.0** directly from [nodejs.org](https://nodejs.org). Confirm your versions:
+
+```bash
+node --version   # v24.18.0
+npm --version    # 11.16.0
+```
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies from the committed lockfile, then start the development server:
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev     # start the development server
+npm run lint    # run ESLint
+npm run build   # create a production build
+npm run start   # serve the production build
+```
 
 ## Learn More
 
